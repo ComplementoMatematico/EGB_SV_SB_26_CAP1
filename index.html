@@ -2,15 +2,16 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Guía de Comprensión Lectora - La hora mágica</title>
+<title>Apoyo en la preparación del control de lectura - El gran Gigante Bonachón</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
+  * { box-sizing: border-box; }
   body {
     font-family: 'Georgia', 'Times New Roman', serif;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 40px 30px;
+    padding: 40px 30px 60px 30px;
     background-color: #faf7f2;
     color: #2c2416;
     line-height: 1.6;
@@ -18,28 +19,129 @@
   header {
     text-align: center;
     border-bottom: 3px double #8a6d3b;
-    padding-bottom: 20px;
+    padding-bottom: 25px;
     margin-bottom: 35px;
   }
+  .kicker {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.8em;
+    color: #8a6d3b;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+  }
   h1 {
-    font-size: 1.8em;
+    font-size: 1.9em;
     color: #5c4a2a;
-    margin-bottom: 5px;
+    margin: 8px 0 5px 0;
   }
   .subtitulo {
     font-style: italic;
     color: #7a6a4a;
-    font-size: 0.95em;
+    font-size: 1em;
   }
-  .instrucciones {
-    background-color: #f0e9db;
-    border-left: 4px solid #8a6d3b;
-    padding: 15px 20px;
-    margin-bottom: 30px;
-    font-size: 0.95em;
-  }
-  .seccion {
+
+  /* Foto principal */
+  .foto-principal {
+    display: flex;
+    justify-content: center;
     margin-bottom: 40px;
+  }
+  .foto-principal .marco {
+    background-color: #ffffff;
+    border: 2px dashed #c9b98f;
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+  }
+  .foto-principal img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+  }
+  .foto-principal .placeholder-text {
+    color: #b0a380;
+    font-size: 0.9em;
+    font-style: italic;
+    padding: 60px 15px;
+  }
+
+  /* Progreso de estrellas */
+  .seccion-progreso {
+    background-color: #241b3a;
+    border-radius: 16px;
+    padding: 28px 20px 22px 20px;
+    margin-bottom: 45px;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  }
+  .progreso-titulo {
+    font-family: 'Fredoka', sans-serif;
+    color: #ffe3f0;
+    font-size: 1em;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .progreso-contador {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 2.6em;
+    color: #ff8fc7;
+    text-shadow: 0 0 10px rgba(255,143,199,0.5);
+    margin-bottom: 14px;
+  }
+  .progreso-contador .de {
+    font-size: 0.5em;
+    color: #d6c8f0;
+    font-weight: 500;
+  }
+  .estrellas-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 6px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .estrella {
+    width: 100%;
+    aspect-ratio: 1;
+    opacity: 0;
+    transform: scale(0);
+  }
+  .estrella svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .estrella.llena polygon {
+    fill: #ff6fae;
+    stroke: #1a1220;
+    stroke-width: 6;
+    stroke-linejoin: round;
+  }
+  .estrella.vacia polygon {
+    fill: none;
+    stroke: #6a5a8a;
+    stroke-width: 6;
+    stroke-linejoin: round;
+  }
+  .estrella.aparece {
+    animation: pop-estrella 0.45s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  @keyframes pop-estrella {
+    0%   { opacity: 0; transform: scale(0) rotate(-25deg); }
+    60%  { opacity: 1; transform: scale(1.25) rotate(8deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+
+  /* Capítulos */
+  .seccion-capitulos {
+    margin-bottom: 30px;
   }
   .seccion-titulo {
     background-color: #5c4a2a;
@@ -47,117 +149,65 @@
     padding: 8px 15px;
     border-radius: 4px;
     font-size: 1.1em;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     display: inline-block;
   }
-  .pregunta {
+  .capitulos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .capitulo-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
     background-color: #ffffff;
     border: 1px solid #ddd0b8;
-    border-radius: 8px;
-    padding: 20px 25px;
-    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: #2c2416;
     box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
-  .pregunta-numero {
-    font-weight: bold;
-    color: #8a6d3b;
-    font-size: 1.05em;
+  .capitulo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    border-color: #8a6d3b;
   }
-  .pregunta-texto {
-    margin: 8px 0 15px 0;
-    font-size: 1.05em;
-  }
-  .alternativas {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .alternativas li {
-    padding: 8px 10px 8px 35px;
-    position: relative;
-    margin-bottom: 6px;
-    border-radius: 5px;
-    border: 2px solid transparent;
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-  }
-  .alternativas li:hover {
-    background-color: #f5efe0;
-  }
-  .alternativas.respondida li {
-    cursor: default;
-  }
-  .alternativas.respondida li:hover {
-    background-color: inherit;
-  }
-  .alternativas li.correcta {
-    background-color: #dff0d8;
-    border-color: #5cb85c;
-    color: #2e5b2e;
-    font-weight: bold;
-  }
-  .alternativas li.incorrecta {
-    background-color: #f9dede;
-    border-color: #d9534f;
-    color: #8a2c2c;
-  }
-  .letra {
-    position: absolute;
-    left: 8px;
-    font-weight: bold;
-    color: #8a6d3b;
-  }
-  .correcta .letra {
-    color: #2e5b2e;
-  }
-  .incorrecta .letra {
-    color: #8a2c2c;
-  }
-  .etiqueta {
-    display: inline-block;
-    font-size: 0.75em;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    background-color: #e8dfc7;
-    color: #5c4a2a;
-    padding: 3px 10px;
-    border-radius: 12px;
-    margin-bottom: 10px;
-  }
-  .ejemplo-advertencia {
-    background-color: #f9dede;
-    border-left: 4px solid #d9534f;
-    color: #8a2c2c;
-    padding: 8px 14px;
-    border-radius: 6px;
-    font-size: 0.85em;
-    margin-top: 14px;
-    margin-bottom: 4px;
-    font-weight: bold;
-  }
-  .linea-escritura {
-    position: relative;
-  }
-  .texto-manuscrito {
-    font-family: 'Caveat', 'Comic Sans MS', cursive;
-    font-size: 1.55em;
-    color: #2f5fa8;
-    position: absolute;
-    bottom: 2px;
-    left: 4px;
-    white-space: nowrap;
-  }
-  .explicacion {
-    margin-top: 12px;
-    font-size: 0.9em;
+  .capitulo-numero {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
     background-color: #f0e9db;
-    padding: 10px 15px;
-    border-radius: 6px;
-    display: none;
+    color: #5c4a2a;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .explicacion.mostrar {
-    display: block;
+  .capitulo-info {
+    flex: 1;
   }
+  .capitulo-info .titulo {
+    font-weight: bold;
+    font-size: 1.08em;
+    color: #5c4a2a;
+    margin-bottom: 2px;
+  }
+  .capitulo-info .detalle {
+    font-size: 0.88em;
+    color: #7a6a4a;
+    font-style: italic;
+  }
+  .capitulo-flecha {
+    font-size: 1.4em;
+    color: #c9b98f;
+  }
+
   footer {
     text-align: center;
     font-size: 0.85em;
@@ -166,342 +216,89 @@
     border-top: 1px solid #ddd0b8;
     padding-top: 15px;
   }
-  .paginas-lectura {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    justify-content: center;
-    margin-bottom: 30px;
-  }
-  .pagina-box {
-    background-color: #ffffff;
-    border: 2px dashed #c9b98f;
-    border-radius: 8px;
-    padding: 15px;
-    text-align: center;
-    width: 280px;
-  }
-  .pagina-box img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-    display: block;
-    margin: 0 auto 8px auto;
-  }
-  .pagina-box .placeholder-text {
-    color: #b0a380;
-    font-size: 0.85em;
-    font-style: italic;
-    padding: 40px 10px;
-  }
-  .pagina-label {
-    font-size: 0.85em;
-    color: #7a6a4a;
-    margin-top: 6px;
-  }
-  .reflexion-pregunta {
-    background-color: #ffffff;
-    border: 1px solid #ddd0b8;
-    border-radius: 8px;
-    padding: 22px 28px;
-    margin-bottom: 28px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-  }
-  .linea-escritura {
-    border-bottom: 1px solid #b0a380;
-    height: 32px;
-    margin-top: 4px;
-  }
-  .campo-datos {
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-    margin-bottom: 20px;
-    font-size: 0.95em;
-  }
-  .campo-datos span {
-    border-bottom: 1px solid #999;
-    flex: 1;
-    padding-bottom: 3px;
-  }
-  .boton-imprimir {
-    display: block;
-    margin: 0 auto 25px auto;
-    background-color: #5c4a2a;
-    color: #faf7f2;
-    border: none;
-    padding: 10px 22px;
-    border-radius: 6px;
-    font-family: 'Georgia', serif;
-    font-size: 0.95em;
-    cursor: pointer;
-  }
-  .boton-imprimir:hover {
-    background-color: #7a6a4a;
-  }
-  @media print {
-    .boton-imprimir,
-    .instrucciones,
-    .paginas-lectura,
-    .no-imprimir,
-    header .subtitulo {
-      display: none !important;
-    }
-    .seccion {
-      page-break-inside: avoid;
-    }
-    @page {
-      margin: 0.8cm 1.5cm;
-    }
-    body {
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-    header {
-      margin-bottom: 10px !important;
-      padding-bottom: 8px !important;
-      border-bottom-width: 2px !important;
-    }
-    h1 {
-      font-size: 1.3em !important;
-      margin-bottom: 2px !important;
-    }
-    .seccion-titulo {
-      padding: 4px 12px !important;
-      margin-bottom: 10px !important;
-      font-size: 1em !important;
-    }
-    .reflexion-pregunta {
-      padding: 12px 16px !important;
-      margin-bottom: 12px !important;
-    }
-    .pregunta-texto {
-      font-size: 0.92em !important;
-      margin: 4px 0 8px 0 !important;
-      line-height: 1.35 !important;
-    }
-    .campo-datos {
-      margin-bottom: 10px !important;
-      font-size: 0.85em !important;
-    }
-    .linea-escritura {
-      height: 22px !important;
-    }
-    .pregunta-numero {
-      font-size: 0.95em !important;
-    }
-    .etiqueta {
-      padding: 1px 8px !important;
-      margin-bottom: 4px !important;
-      font-size: 0.7em !important;
-    }
-  }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Guía de Comprensión Lectora</h1>
-  <div class="subtitulo">"La hora mágica" — Fragmento inicial (capítulo con el personaje Sofía)</div>
+  <div class="kicker">Material de apoyo a la lectura</div>
+  <h1>Apoyo en la preparación del control de lectura</h1>
+  <div class="subtitulo">"El gran Gigante Bonachón"</div>
 </header>
 
-<div class="instrucciones">
-  📖 <strong>Instrucciones:</strong> Lee con atención el fragmento antes de responder. Haz clic en la alternativa que consideres correcta: se marcará en <strong style="color:#2e5b2e;">verde</strong> si acertaste o en <strong style="color:#8a2c2c;">rojo</strong> si fallaste (y se mostrará cuál era la correcta).
-</div>
-
-<div class="seccion no-imprimir">
-  <div class="seccion-titulo">📄 Páginas del texto</div>
-  <div class="paginas-lectura">
-    <div class="pagina-box">
-      <img src="pagina1.png" alt="Página 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-      <div class="placeholder-text" style="display:none;">📷 Aquí va la imagen de la página 1<br>(reemplaza "pagina1.png" por tu archivo)</div>
-      <div class="pagina-label">Página 1</div>
-    </div>
-    <div class="pagina-box">
-      <img src="pagina2.png" alt="Página 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-      <div class="placeholder-text" style="display:none;">📷 Aquí va la imagen de la página 2<br>(reemplaza "pagina2.png" por tu archivo)</div>
-      <div class="pagina-label">Página 2</div>
+<div class="foto-principal">
+  <div class="marco">
+    <img src="portada.png" alt="Afiche El gran Gigante Bonachón"
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <div class="placeholder-text" style="display:none;">
+      🖼️ Aquí va la imagen principal / afiche del libro<br>
+      (coloca tu archivo dentro de la carpeta <strong>AFICHE</strong> y ajusta el nombre en el código si es distinto de "afiche.png")
     </div>
   </div>
 </div>
 
-<div class="seccion no-imprimir">
-  <div class="seccion-titulo">🔍 Comprensión y Análisis</div>
-
-  <div class="pregunta">
-    <span class="pregunta-numero">Pregunta 1</span>
-    <span class="etiqueta">Comprensión literal</span>
-    <p class="pregunta-texto">¿Por qué Sofía no lograba conciliar el sueño al comienzo del relato?</p>
-    <ul class="alternativas" data-correcta="B">
-      <li data-letra="A"><span class="letra">A)</span> Porque tenía miedo de la oscuridad.</li>
-      <li data-letra="B"><span class="letra">B)</span> Porque un rayo de luna entraba por la ventana y le daba directamente en la almohada.</li>
-      <li data-letra="C"><span class="letra">C)</span> Porque escuchaba ruidos extraños en el piso de arriba.</li>
-      <li data-letra="D"><span class="letra">D)</span> Porque las demás niñas hacían mucho ruido.</li>
-    </ul>
-    <div class="explicacion">Alternativa B. El relato señala que un rayo de luna se colaba por las cortinas y caía justo sobre su almohada, impidiéndole dormir.</div>
-  </div>
-
-  <div class="pregunta">
-    <span class="pregunta-numero">Pregunta 2</span>
-    <span class="etiqueta">Inferencia</span>
-    <p class="pregunta-texto">Según lo que se describe del silencio de la casa y de la calle, ¿qué se puede inferir sobre el momento del relato?</p>
-    <ul class="alternativas" data-correcta="B">
-      <li data-letra="A"><span class="letra">A)</span> Es de día y todos están trabajando fuera de la casa.</li>
-      <li data-letra="B"><span class="letra">B)</span> Es una hora muy avanzada de la noche, cuando todos duermen profundamente.</li>
-      <li data-letra="C"><span class="letra">C)</span> Es temprano en la mañana y la gente recién despierta.</li>
-      <li data-letra="D"><span class="letra">D)</span> Hay una tormenta que mantiene a todos encerrados.</li>
-    </ul>
-    <div class="explicacion">Alternativa B. El silencio absoluto —sin voces, sin pasos, sin coches— y la mención de que "tanto los niños como los adultos" estaban sumidos en el sueño profundo indican que es de madrugada.</div>
-  </div>
-
-  <div class="pregunta">
-    <span class="pregunta-numero">Pregunta 3</span>
-    <span class="etiqueta">Análisis del personaje</span>
-    <p class="pregunta-texto">¿Qué actitud demuestra Sofía al decidir mirar por la ventana pese a las reglas y a su temor?</p>
-    <ul class="alternativas" data-correcta="C">
-      <li data-letra="A"><span class="letra">A)</span> Total indiferencia ante lo que pueda pasar.</li>
-      <li data-letra="B"><span class="letra">B)</span> Obediencia estricta a las normas del internado.</li>
-      <li data-letra="C"><span class="letra">C)</span> Curiosidad más fuerte que el miedo o el riesgo de ser castigada.</li>
-      <li data-letra="D"><span class="letra">D)</span> Enojo hacia las demás niñas por dormir tan tranquilas.</li>
-    </ul>
-    <div class="explicacion">Alternativa C. Aunque sabe que podría ser castigada y aunque vacila un momento, el deseo de mirar afuera se hace tan intenso que no logra resistirlo, lo que muestra que su curiosidad supera el miedo.</div>
-  </div>
-
-  <div class="pregunta">
-    <span class="pregunta-numero">Pregunta 4</span>
-    <span class="etiqueta">Inferencia / anticipación</span>
-    <p class="pregunta-texto">Al final del fragmento, Sofía distingue una figura negra, alta y muy delgada acercándose por la otra acera. ¿Qué función cumple este momento dentro del relato?</p>
-    <ul class="alternativas" data-correcta="B">
-      <li data-letra="A"><span class="letra">A)</span> Cierra la historia dejando todo resuelto y tranquilo.</li>
-      <li data-letra="B"><span class="letra">B)</span> Introduce un elemento de suspenso o misterio que invita a seguir leyendo.</li>
-      <li data-letra="C"><span class="letra">C)</span> Explica de forma completa quién es esa figura y qué quiere.</li>
-      <li data-letra="D"><span class="letra">D)</span> Demuestra que la "hora mágica" en realidad no existe.</li>
-    </ul>
-    <div class="explicacion">Alternativa B. La aparición repentina de esa silueta funciona como un "gancho narrativo": genera tensión y curiosidad justo cuando el capítulo termina, típico recurso para enganchar al lector con el resto de la historia.</div>
-  </div>
-
-  <div class="pregunta">
-    <span class="pregunta-numero">Pregunta 5</span>
-    <span class="etiqueta">Análisis descriptivo</span>
-    <p class="pregunta-texto">Cuando Sofía observa la calle a la luz de la luna, esta le parece distinta a como la conocía: las casas se ven torcidas, pálidas e irreales. ¿Qué recurso literario predomina en esta descripción?</p>
-    <ul class="alternativas" data-correcta="B">
-      <li data-letra="A"><span class="letra">A)</span> Un diálogo entre dos personajes.</li>
-      <li data-letra="B"><span class="letra">B)</span> Una descripción que transforma lo cotidiano en algo extraño e inquietante (ambientación).</li>
-      <li data-letra="C"><span class="letra">C)</span> Un resumen de hechos históricos.</li>
-      <li data-letra="D"><span class="letra">D)</span> Una enumeración de datos científicos sobre la luna.</li>
-    </ul>
-    <div class="explicacion">Alternativa B. El autor usa la descripción del entorno (calles torcidas, casas "como las de los cuentos", aire "misterioso") para crear una atmósfera onírica e inquietante, reforzando la sensación de que algo fuera de lo común está por ocurrir.</div>
-  </div>
+<div class="seccion-progreso">
+  <div class="progreso-titulo">Avance de la guía</div>
+  <div class="progreso-contador"><span id="numero-contador">0</span><span class="de">&nbsp;/ 50 estrellas</span></div>
+  <div class="estrellas-grid" id="estrellas-grid"></div>
 </div>
 
-<div class="seccion no-imprimir">
-  <div class="seccion-titulo">📚 Vocabulario en contexto</div>
+<div class="seccion-capitulos">
+  <div class="seccion-titulo">📖 Capítulos disponibles</div>
+  <div class="capitulos-lista">
+    <a class="capitulo-card" href="CAPITULO_01/index.html">
+      <div class="capitulo-numero">01</div>
+      <div class="capitulo-info">
+        <div class="titulo">Capítulo 1</div>
+        <div class="detalle">Guía de comprensión lectora — páginas 13 y 14</div>
+      </div>
+      <div class="capitulo-flecha">›</div>
+    </a>
 
-  <div class="pregunta">
-    <span class="pregunta-numero">Vocabulario 1</span>
-    <p class="pregunta-texto">En el texto se dice que el rayo de luna "asomaba <strong>al sesgo</strong>" por entre las cortinas. ¿Qué significa "al sesgo" en este contexto?</p>
-    <ul class="alternativas" data-correcta="A">
-      <li data-letra="A"><span class="letra">A)</span> De forma oblicua o inclinada.</li>
-      <li data-letra="B"><span class="letra">B)</span> Con mucha fuerza y velocidad.</li>
-      <li data-letra="C"><span class="letra">C)</span> De manera intermitente, como parpadeando.</li>
-      <li data-letra="D"><span class="letra">D)</span> Completamente vertical.</li>
-    </ul>
-    <div class="explicacion">Alternativa A. "Al sesgo" significa en diagonal o de forma inclinada, describiendo cómo entraba la luz por la ventana.</div>
-  </div>
+    <a class="capitulo-card" href="CAPITULO_02/index.html">
+      <div class="capitulo-numero">02</div>
+      <div class="capitulo-info">
+        <div class="titulo">Capítulo 2</div>
+        <div class="detalle">Guía de comprensión lectora — páginas 15, 16 y 17</div>
+      </div>
+      <div class="capitulo-flecha">›</div>
+    </a>
 
-  <div class="pregunta">
-    <span class="pregunta-numero">Vocabulario 2</span>
-    <p class="pregunta-texto">Sofía se acerca a la ventana "<strong>de puntillas</strong>". ¿Qué significa esta expresión?</p>
-    <ul class="alternativas" data-correcta="B">
-      <li data-letra="A"><span class="letra">A)</span> Corriendo rápidamente y sin cuidado.</li>
-      <li data-letra="B"><span class="letra">B)</span> Caminando sobre la punta de los pies para no hacer ruido.</li>
-      <li data-letra="C"><span class="letra">C)</span> Gateando por el suelo.</li>
-      <li data-letra="D"><span class="letra">D)</span> Dando saltos pequeños de alegría.</li>
-    </ul>
-    <div class="explicacion">Alternativa B. "Andar de puntillas" significa caminar apoyando solo la punta de los pies, generalmente para moverse en silencio y no ser descubierto.</div>
-  </div>
-</div>
-
-<div class="seccion">
-  <div class="seccion-titulo">✍️ Preguntas de Interpretación y Reflexión</div>
-  <p class="no-imprimir" style="font-size:0.85em; color:#7a6a4a; margin-top:-10px; margin-bottom:15px;">
-    Al imprimir o exportar a PDF, solo se incluirá esta sección y las líneas quedarán en blanco.
-  </p>
-
-  <button class="boton-imprimir no-imprimir" onclick="window.print()">🖨️ Imprimir / Guardar como PDF</button>
-
-  <div class="reflexion-pregunta">
-    <div class="campo-datos">
-      <div>Nombre: <span>&nbsp;</span></div>
-      <div>Fecha: <span>&nbsp;</span></div>
-    </div>
-
-    <span class="pregunta-numero">Pregunta 1</span>
-    <span class="etiqueta">Interpretación y pensamiento crítico</span>
-    <p class="pregunta-texto">
-      Sofía siente miedo y, al mismo tiempo, mucha curiosidad por descubrir lo que ocurre en la "hora mágica",
-      a pesar de que podría ser castigada si la descubren fuera de la cama. Considerando esta situación,
-      ¿qué harías tú si sintieras esa misma curiosidad por algo prohibido o desconocido? Explica tu respuesta
-      relacionándola con lo que hace Sofía en el relato.
-    </p>
-
-    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">Yo también sentiría curiosidad, igual que Sofía, y</span></div>
-    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">querría mirar con cuidado y en silencio. Pero antes</span></div>
-    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">pensaría si es peligroso o si me pueden descubrir.</span></div>
-
-    <div class="ejemplo-advertencia no-imprimir">
-      ⚠️ El texto azul de arriba es solo un ejemplo de cómo se ve una respuesta completa. Tu respuesta
-      NO puede ser igual ni copiar esas frases: debes escribirla con tus propias palabras.
-    </div>
-  </div>
-
-  <div class="reflexion-pregunta">
-    <span class="pregunta-numero">Pregunta 2</span>
-    <span class="etiqueta">Interpretación y pensamiento crítico</span>
-    <p class="pregunta-texto">
-      Al final del fragmento, Sofía ve acercarse por la otra acera una figura negra, alta y muy delgada, y
-      siente un escalofrío. Considerando esta situación, ¿qué harías tú si estuvieras en el lugar de Sofía
-      en ese momento? Fundamenta tu respuesta usando algún detalle del ambiente o de la escena que leíste
-      en el texto.
-    </p>
-
-    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">Yo sentiría mucho miedo al ver esa sombra tan alta</span></div>
-    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">y oscura. Creo que me alejaría de la ventana rápido</span></div>
-    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">para que no me viera, porque el silencio da más miedo.</span></div>
-
-    <div class="ejemplo-advertencia no-imprimir">
-      ⚠️ El texto azul de arriba es solo un ejemplo de cómo se ve una respuesta completa. Tu respuesta
-      NO puede ser igual ni copiar esas frases: debes escribirla con tus propias palabras.
-    </div>
+    <!-- Para agregar un nuevo capítulo, copia una tarjeta ".capitulo-card" y cambia el href, el número y el detalle -->
   </div>
 </div>
 
 <footer>
-  Guía generada como material de apoyo a la lectura. Las respuestas son sugerencias pedagógicas para autoevaluación.
+  Guía generada como material de apoyo a la lectura.
 </footer>
 
 <script>
-  document.querySelectorAll('.alternativas').forEach(function(ul) {
-    ul.addEventListener('click', function(e) {
-      var li = e.target.closest('li');
-      if (!li || ul.classList.contains('respondida')) return;
+  const TOTAL_ESTRELLAS = 50;
+  const LOGRADAS = 42;
 
-      var correcta = ul.getAttribute('data-correcta');
-      ul.classList.add('respondida');
+  const grid = document.getElementById('estrellas-grid');
+  const contador = document.getElementById('numero-contador');
 
-      ul.querySelectorAll('li').forEach(function(item) {
-        if (item.getAttribute('data-letra') === correcta) {
-          item.classList.add('correcta');
-        } else if (item === li) {
-          item.classList.add('incorrecta');
-        }
-      });
+  const starPoints = "50,4 62,36 97,36 68,57 79,92 50,71 21,92 32,57 3,36 38,36";
 
-      var explicacion = ul.parentElement.querySelector('.explicacion');
-      if (explicacion) {
-        explicacion.classList.add('mostrar');
+  for (let i = 0; i < TOTAL_ESTRELLAS; i++) {
+    const div = document.createElement('div');
+    div.className = 'estrella ' + (i < LOGRADAS ? 'llena' : 'vacia');
+    div.innerHTML = '<svg viewBox="0 0 100 100"><polygon points="' + starPoints + '"/></svg>';
+    grid.appendChild(div);
+  }
+
+  const estrellas = grid.querySelectorAll('.estrella');
+  let contadorActual = 0;
+
+  estrellas.forEach((estrella, index) => {
+    setTimeout(() => {
+      estrella.classList.add('aparece');
+      if (estrella.classList.contains('llena')) {
+        contadorActual++;
+        contador.textContent = contadorActual;
       }
-    });
+    }, index * 45);
   });
 </script>
 

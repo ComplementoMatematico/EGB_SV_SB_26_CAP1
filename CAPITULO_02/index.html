@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Guía de Comprensión Lectora - La hora mágica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    background-color: #faf7f2;
+    color: #2c2416;
+    line-height: 1.6;
+  }
+  header {
+    text-align: center;
+    border-bottom: 3px double #8a6d3b;
+    padding-bottom: 20px;
+    margin-bottom: 35px;
+    position: relative;
+  }
+  .boton-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #f0e9db;
+    color: #5c4a2a;
+    border: 1px solid #ddd0b8;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-family: 'Georgia', serif;
+    font-size: 0.85em;
+    text-decoration: none;
+    margin-bottom: 18px;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+  }
+  .boton-volver:hover {
+    background-color: #e8dfc7;
+    transform: translateX(-2px);
+  }
+  .boton-volver .flecha {
+    font-size: 1.1em;
+  }
+  h1 {
+    font-size: 1.8em;
+    color: #5c4a2a;
+    margin-bottom: 5px;
+  }
+  .subtitulo {
+    font-style: italic;
+    color: #7a6a4a;
+    font-size: 0.95em;
+  }
+  .instrucciones {
+    background-color: #f0e9db;
+    border-left: 4px solid #8a6d3b;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    font-size: 0.95em;
+  }
+  .seccion {
+    margin-bottom: 40px;
+  }
+  .seccion-titulo {
+    background-color: #5c4a2a;
+    color: #faf7f2;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+  .pregunta {
+    background-color: #ffffff;
+    border: 1px solid #ddd0b8;
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+  }
+  .pregunta-numero {
+    font-weight: bold;
+    color: #8a6d3b;
+    font-size: 1.05em;
+  }
+  .pregunta-texto {
+    margin: 8px 0 15px 0;
+    font-size: 1.05em;
+  }
+  .alternativas {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .alternativas li {
+    padding: 8px 10px 8px 35px;
+    position: relative;
+    margin-bottom: 6px;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  .alternativas li:hover {
+    background-color: #f5efe0;
+  }
+  .alternativas.respondida li {
+    cursor: default;
+  }
+  .alternativas.respondida li:hover {
+    background-color: inherit;
+  }
+  .alternativas li.correcta {
+    background-color: #dff0d8;
+    border-color: #5cb85c;
+    color: #2e5b2e;
+    font-weight: bold;
+  }
+  .alternativas li.incorrecta {
+    background-color: #f9dede;
+    border-color: #d9534f;
+    color: #8a2c2c;
+  }
+  .letra {
+    position: absolute;
+    left: 8px;
+    font-weight: bold;
+    color: #8a6d3b;
+  }
+  .correcta .letra {
+    color: #2e5b2e;
+  }
+  .incorrecta .letra {
+    color: #8a2c2c;
+  }
+  .etiqueta {
+    display: inline-block;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: #e8dfc7;
+    color: #5c4a2a;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+  .ejemplo-advertencia {
+    background-color: #f9dede;
+    border-left: 4px solid #d9534f;
+    color: #8a2c2c;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.85em;
+    margin-top: 14px;
+    margin-bottom: 4px;
+    font-weight: bold;
+  }
+  .linea-escritura {
+    position: relative;
+  }
+  .texto-manuscrito {
+    font-family: 'Caveat', 'Comic Sans MS', cursive;
+    font-size: 1.55em;
+    color: #2f5fa8;
+    position: absolute;
+    bottom: 2px;
+    left: 4px;
+    white-space: nowrap;
+  }
+  .explicacion {
+    margin-top: 12px;
+    font-size: 0.9em;
+    background-color: #f0e9db;
+    padding: 10px 15px;
+    border-radius: 6px;
+    display: none;
+  }
+  .explicacion.mostrar {
+    display: block;
+  }
+  footer {
+    text-align: center;
+    font-size: 0.85em;
+    color: #999;
+    margin-top: 40px;
+    border-top: 1px solid #ddd0b8;
+    padding-top: 15px;
+  }
+  .paginas-lectura {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  .pagina-box {
+    background-color: #ffffff;
+    border: 2px dashed #c9b98f;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    width: 280px;
+  }
+  .pagina-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto 8px auto;
+  }
+  .pagina-box .placeholder-text {
+    color: #b0a380;
+    font-size: 0.85em;
+    font-style: italic;
+    padding: 40px 10px;
+  }
+  .pagina-label {
+    font-size: 0.85em;
+    color: #7a6a4a;
+    margin-top: 6px;
+  }
+  .reflexion-pregunta {
+    background-color: #ffffff;
+    border: 1px solid #ddd0b8;
+    border-radius: 8px;
+    padding: 22px 28px;
+    margin-bottom: 28px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+  }
+  .linea-escritura {
+    border-bottom: 1px solid #b0a380;
+    height: 32px;
+    margin-top: 4px;
+  }
+  .campo-datos {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 20px;
+    font-size: 0.95em;
+  }
+  .campo-datos span {
+    border-bottom: 1px solid #999;
+    flex: 1;
+    padding-bottom: 3px;
+  }
+  .boton-imprimir {
+    display: block;
+    margin: 0 auto 25px auto;
+    background-color: #5c4a2a;
+    color: #faf7f2;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-family: 'Georgia', serif;
+    font-size: 0.95em;
+    cursor: pointer;
+  }
+  .boton-imprimir:hover {
+    background-color: #7a6a4a;
+  }
+  @media print {
+    .boton-imprimir,
+    .instrucciones,
+    .paginas-lectura,
+    .no-imprimir,
+    header .subtitulo {
+      display: none !important;
+    }
+    .seccion {
+      page-break-inside: avoid;
+    }
+    @page {
+      margin: 0.8cm 1.5cm;
+    }
+    body {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    header {
+      margin-bottom: 10px !important;
+      padding-bottom: 8px !important;
+      border-bottom-width: 2px !important;
+    }
+    h1 {
+      font-size: 1.3em !important;
+      margin-bottom: 2px !important;
+    }
+    .seccion-titulo {
+      padding: 4px 12px !important;
+      margin-bottom: 10px !important;
+      font-size: 1em !important;
+    }
+    .reflexion-pregunta {
+      padding: 12px 16px !important;
+      margin-bottom: 12px !important;
+    }
+    .pregunta-texto {
+      font-size: 0.92em !important;
+      margin: 4px 0 8px 0 !important;
+      line-height: 1.35 !important;
+    }
+    .campo-datos {
+      margin-bottom: 10px !important;
+      font-size: 0.85em !important;
+    }
+    .linea-escritura {
+      height: 22px !important;
+    }
+    .pregunta-numero {
+      font-size: 0.95em !important;
+    }
+    .etiqueta {
+      padding: 1px 8px !important;
+      margin-bottom: 4px !important;
+      font-size: 0.7em !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="boton-volver no-imprimir" href="../index.html"><span class="flecha">←</span> Volver al índice principal</a>
+  <h1>Guía de Comprensión Lectora</h1>
+  <div class="subtitulo">"La hora mágica" — Fragmento inicial (capítulo con el personaje Sofía)</div>
+</header>
+
+<div class="instrucciones">
+  📖 <strong>Instrucciones:</strong> Lee con atención el fragmento antes de responder. Haz clic en la alternativa que consideres correcta: se marcará en <strong style="color:#2e5b2e;">verde</strong> si acertaste o en <strong style="color:#8a2c2c;">rojo</strong> si fallaste (y se mostrará cuál era la correcta).
+</div>
+
+<div class="seccion no-imprimir">
+  <div class="seccion-titulo">📄 Páginas del texto</div>
+  <div class="paginas-lectura">
+    <div class="pagina-box">
+      <img src="pagina15.png" alt="Página 15" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <div class="placeholder-text" style="display:none;">📷 Aquí va la imagen de la página 1<br>(reemplaza "pagina1.png" por tu archivo)</div>
+      <div class="pagina-label">Página 15</div>
+    </div>
+    <div class="pagina-box">
+      <img src="pagina16.png" alt="Página 16" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <div class="placeholder-text" style="display:none;">📷 Aquí va la imagen de la página 2<br>(reemplaza "pagina2.png" por tu archivo)</div>
+      <div class="pagina-label">Página 16</div>
+    </div>
+    <div class="pagina-box">
+      <img src="pagina17.png" alt="Página 17" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <div class="placeholder-text" style="display:none;">📷 Aquí va la imagen de la página 2<br>(reemplaza "pagina2.png" por tu archivo)</div>
+      <div class="pagina-label">Página 17</div>
+    </div>
+  </div>
+</div>
+
+<div class="seccion no-imprimir">
+  <div class="seccion-titulo">🔍 Comprensión y Análisis</div>
+
+  
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 6</span>
+    <span class="etiqueta">Comprensión literal</span>
+    <p class="pregunta-texto">Cuando Sofía ve por primera vez la enorme figura, quiere gritar pero no puede. ¿Qué se lo impide?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> El sueño todavía la tenía adormecida.</li>
+      <li data-letra="B"><span class="letra">B)</span> El susto le oprimía la garganta y todo el cuerpo, y no le salía ningún sonido.</li>
+      <li data-letra="C"><span class="letra">C)</span> Se tapó la boca con las manos para no hacer ruido.</li>
+      <li data-letra="D"><span class="letra">D)</span> No quería despertar a las demás niñas del internado.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. El relato indica que el susto le atenazaba la garganta y el cuerpo entero, por lo que, aunque abrió la boca, no logró emitir sonido alguno.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 7</span>
+    <span class="etiqueta">Inferencia</span>
+    <p class="pregunta-texto">La figura se detiene frente a cada casa y se agacha para mirar por las ventanas de los pisos superiores. Según esto, ¿qué se puede inferir que está haciendo?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> Busca algo para robar en cada vivienda.</li>
+      <li data-letra="B"><span class="letra">B)</span> Va revisando cuáles habitaciones pertenecen a niños dormidos.</li>
+      <li data-letra="C"><span class="letra">C)</span> Está perdido y busca una dirección concreta.</li>
+      <li data-letra="D"><span class="letra">D)</span> Cuenta el número de casas que hay en la calle.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. Se detiene justo frente al cuarto donde duermen Miguel y Juanita Goochey y observa por esa ventana en particular, lo que sugiere que busca específicamente habitaciones de niños.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 8</span>
+    <span class="etiqueta">Comprensión literal</span>
+    <p class="pregunta-texto">¿Qué hace el gigante con el misterioso contenido que saca de un tarro dentro de su maleta?</p>
+    <ul class="alternativas" data-correcta="C">
+      <li data-letra="A"><span class="letra">A)</span> Lo guarda nuevamente sin usarlo.</li>
+      <li data-letra="B"><span class="letra">B)</span> Lo derrama sobre la calle.</li>
+      <li data-letra="C"><span class="letra">C)</span> Lo vierte dentro de su larga trompeta y lo sopla hacia la ventana del cuarto de los niños.</li>
+      <li data-letra="D"><span class="letra">D)</span> Se lo entrega a los padres de los niños.</li>
+    </ul>
+    <div class="explicacion">Alternativa C. El gigante destapa el tarro, echa su contenido en la trompeta, la introduce por la ventana abierta y sopla, aunque no se escucha ningún sonido.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 9</span>
+    <span class="etiqueta">Análisis narrativo</span>
+    <p class="pregunta-texto">Justo cuando recoge la maleta del suelo, el gigante vuelve la cabeza y mira hacia el otro lado de la calle, donde está Sofía. ¿Qué efecto produce este giro en la tensión de la historia?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> Resuelve de inmediato todo el misterio del relato.</li>
+      <li data-letra="B"><span class="letra">B)</span> Genera un momento de máximo suspenso, pues existe el riesgo de que Sofía sea descubierta espiando.</li>
+      <li data-letra="C"><span class="letra">C)</span> No aporta ninguna tensión, es un detalle sin importancia.</li>
+      <li data-letra="D"><span class="letra">D)</span> Demuestra que el gigante ya sabía que Sofía estaba ahí desde el principio.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. El giro inesperado de la cabeza del gigante justo hacia donde observa Sofía crea un instante de gran tensión, pues el lector no sabe si ella será vista.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 10</span>
+    <span class="etiqueta">Análisis del personaje</span>
+    <p class="pregunta-texto">Al ver de cerca, a la luz de la luna, el rostro del gigante y notar que sus ojos están clavados en ella, ¿cómo reacciona Sofía?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> Se queda inmóvil observándolo con curiosidad.</li>
+      <li data-letra="B"><span class="letra">B)</span> Ahoga un grito, se aparta de la ventana y corre a esconderse temblando debajo de la manta.</li>
+      <li data-letra="C"><span class="letra">C)</span> Sale corriendo del dormitorio a pedir ayuda a un adulto.</li>
+      <li data-letra="D"><span class="letra">D)</span> Le hace una seña con la mano al gigante.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. Sofía se asusta muchísimo, atraviesa el dormitorio corriendo, se mete en la cama y permanece acurrucada y temblando de pies a cabeza.</div>
+  </div>
+</div>
+
+<div class="seccion no-imprimir">
+  <div class="seccion-titulo">📚 Vocabulario en contexto</div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Vocabulario 1</span>
+    <p class="pregunta-texto">En el texto se dice que el rayo de luna "asomaba <strong>al sesgo</strong>" por entre las cortinas. ¿Qué significa "al sesgo" en este contexto?</p>
+    <ul class="alternativas" data-correcta="A">
+      <li data-letra="A"><span class="letra">A)</span> De forma oblicua o inclinada.</li>
+      <li data-letra="B"><span class="letra">B)</span> Con mucha fuerza y velocidad.</li>
+      <li data-letra="C"><span class="letra">C)</span> De manera intermitente, como parpadeando.</li>
+      <li data-letra="D"><span class="letra">D)</span> Completamente vertical.</li>
+    </ul>
+    <div class="explicacion">Alternativa A. "Al sesgo" significa en diagonal o de forma inclinada, describiendo cómo entraba la luz por la ventana.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Vocabulario 2</span>
+    <p class="pregunta-texto">Sofía se acerca a la ventana "<strong>de puntillas</strong>". ¿Qué significa esta expresión?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> Corriendo rápidamente y sin cuidado.</li>
+      <li data-letra="B"><span class="letra">B)</span> Caminando sobre la punta de los pies para no hacer ruido.</li>
+      <li data-letra="C"><span class="letra">C)</span> Gateando por el suelo.</li>
+      <li data-letra="D"><span class="letra">D)</span> Dando saltos pequeños de alegría.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. "Andar de puntillas" significa caminar apoyando solo la punta de los pies, generalmente para moverse en silencio y no ser descubierto.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Vocabulario 3</span>
+    <p class="pregunta-texto">Se dice que Sofía "<strong>escudriñó</strong>" la calle envuelta en brumas. ¿Qué significa este verbo?</p>
+    <ul class="alternativas" data-correcta="A">
+      <li data-letra="A"><span class="letra">A)</span> Observar con mucha atención y detalle, tratando de descubrir algo.</li>
+      <li data-letra="B"><span class="letra">B)</span> Ignorar por completo lo que se tiene enfrente.</li>
+      <li data-letra="C"><span class="letra">C)</span> Recordar algo con nostalgia.</li>
+      <li data-letra="D"><span class="letra">D)</span> Caminar muy rápido de un lugar a otro.</li>
+    </ul>
+    <div class="explicacion">Alternativa A. "Escudriñar" significa examinar o mirar algo con mucho cuidado y minuciosidad para descubrir detalles ocultos.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Vocabulario 4</span>
+    <p class="pregunta-texto">La mirada del gigante se describe como "<strong>torva</strong> y diabólica". ¿Qué significa "torva" en este contexto?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> Alegre y amistosa.</li>
+      <li data-letra="B"><span class="letra">B)</span> Amenazante, fiera o de aspecto siniestro.</li>
+      <li data-letra="C"><span class="letra">C)</span> Distraída, como si mirara sin ver.</li>
+      <li data-letra="D"><span class="letra">D)</span> Llorosa y triste.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. "Torva" describe una mirada fiera, amenazante o de aspecto intimidante, coherente con el terror que siente Sofía en ese momento.</div>
+  </div>
+</div>
+
+<div class="seccion">
+  <div class="seccion-titulo">✍️ Preguntas de Interpretación y Reflexión</div>
+  <p class="no-imprimir" style="font-size:0.85em; color:#7a6a4a; margin-top:-10px; margin-bottom:15px;">
+    Al imprimir o exportar a PDF, solo se incluirá esta sección y las líneas quedarán en blanco.
+  </p>
+
+  <button class="boton-imprimir no-imprimir" onclick="window.print()">🖨️ Imprimir / Guardar como PDF</button>
+
+ 
+
+  <div class="reflexion-pregunta">
+    <div class="campo-datos">
+      <div>Nombre: <span>&nbsp;</span></div>
+      <div>Fecha: <span>&nbsp;</span></div>
+    </div>
+
+    <span class="pregunta-numero">Pregunta 3</span>
+    <span class="etiqueta">Interpretación y pensamiento crítico</span>
+    <p class="pregunta-texto">
+      El gigante vierte un misterioso contenido en su trompeta y lo sopla, sin hacer ruido, hacia la ventana
+      del cuarto donde duermen Miguel y Juanita. Sofía no logra saber qué era eso que envió a la habitación.
+      Considerando las pistas de la escena (la hora de la noche, que los niños dormían, la forma silenciosa
+      de actuar del gigante), ¿qué crees tú que podría contener ese tarro? Explica tu respuesta apoyándote
+      en algún detalle del texto.
+    </p>
+
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">Creo que podría tratarse de algo relacionado con</span></div>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">los sueños, porque el gigante actúa de noche, junto a</span></div>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">la ventana de niños dormidos, y sopla en silencio.</span></div>
+
+    <div class="ejemplo-advertencia no-imprimir">
+      ⚠️ El texto azul de arriba es solo un ejemplo de cómo se ve una respuesta completa. Tu respuesta
+      NO puede ser igual ni copiar esas frases: debes escribirla con tus propias palabras.
+    </div>
+  </div>
+
+  <div class="reflexion-pregunta">
+    <span class="pregunta-numero">Pregunta 4</span>
+    <span class="etiqueta">Interpretación y pensamiento crítico</span>
+    <p class="pregunta-texto">
+      Al final del fragmento, el gigante voltea la cabeza y sus ojos quedan fijos en Sofía, quien se asusta
+      muchísimo y corre a esconderse bajo la manta. Si tú hubieras estado observando por esa ventana en ese
+      instante, ¿qué habrías hecho? Fundamenta tu respuesta usando algún detalle del ambiente o de la escena
+      que leíste en el texto.
+    </p>
+
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">Yo también me habría alejado de inmediato de la</span></div>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">ventana, porque esa mirada tan fija y siniestra da</span></div>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">mucho miedo, y me habría escondido como Sofía.</span></div>
+
+    <div class="ejemplo-advertencia no-imprimir">
+      ⚠️ El texto azul de arriba es solo un ejemplo de cómo se ve una respuesta completa. Tu respuesta
+      NO puede ser igual ni copiar esas frases: debes escribirla con tus propias palabras.
+    </div>
+  </div>
+</div>
+
+<footer>
+  Guía generada como material de apoyo a la lectura. Las respuestas son sugerencias pedagógicas para autoevaluación.
+</footer>
+
+<script>
+  document.querySelectorAll('.alternativas').forEach(function(ul) {
+    ul.addEventListener('click', function(e) {
+      var li = e.target.closest('li');
+      if (!li || ul.classList.contains('respondida')) return;
+
+      var correcta = ul.getAttribute('data-correcta');
+      ul.classList.add('respondida');
+
+      ul.querySelectorAll('li').forEach(function(item) {
+        if (item.getAttribute('data-letra') === correcta) {
+          item.classList.add('correcta');
+        } else if (item === li) {
+          item.classList.add('incorrecta');
+        }
+      });
+
+      var explicacion = ul.parentElement.querySelector('.explicacion');
+      if (explicacion) {
+        explicacion.classList.add('mostrar');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
