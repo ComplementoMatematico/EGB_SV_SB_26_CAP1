@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Guía de Comprensión Lectora - ¡Raptada!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    background-color: #faf7f2;
+    color: #2c2416;
+    line-height: 1.6;
+  }
+  header {
+    text-align: center;
+    border-bottom: 3px double #8a6d3b;
+    padding-bottom: 20px;
+    margin-bottom: 35px;
+    position: relative;
+  }
+  .boton-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #f0e9db;
+    color: #5c4a2a;
+    border: 1px solid #ddd0b8;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-family: 'Georgia', serif;
+    font-size: 0.85em;
+    text-decoration: none;
+    margin-bottom: 18px;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+  }
+  .boton-volver:hover {
+    background-color: #e8dfc7;
+    transform: translateX(-2px);
+  }
+  .boton-volver .flecha {
+    font-size: 1.1em;
+  }
+  h1 {
+    font-size: 1.8em;
+    color: #5c4a2a;
+    margin-bottom: 5px;
+  }
+  .subtitulo {
+    font-style: italic;
+    color: #7a6a4a;
+    font-size: 0.95em;
+  }
+  .instrucciones {
+    background-color: #f0e9db;
+    border-left: 4px solid #8a6d3b;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    font-size: 0.95em;
+  }
+  .seccion {
+    margin-bottom: 40px;
+  }
+  .seccion-titulo {
+    background-color: #5c4a2a;
+    color: #faf7f2;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+  .pregunta {
+    background-color: #ffffff;
+    border: 1px solid #ddd0b8;
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+  }
+  .pregunta-numero {
+    font-weight: bold;
+    color: #8a6d3b;
+    font-size: 1.05em;
+  }
+  .pregunta-texto {
+    margin: 8px 0 15px 0;
+    font-size: 1.05em;
+  }
+  .alternativas {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .alternativas li {
+    padding: 8px 10px 8px 35px;
+    position: relative;
+    margin-bottom: 6px;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  .alternativas li:hover {
+    background-color: #f5efe0;
+  }
+  .alternativas.respondida li {
+    cursor: default;
+  }
+  .alternativas.respondida li:hover {
+    background-color: inherit;
+  }
+  .alternativas li.correcta {
+    background-color: #dff0d8;
+    border-color: #5cb85c;
+    color: #2e5b2e;
+    font-weight: bold;
+  }
+  .alternativas li.incorrecta {
+    background-color: #f9dede;
+    border-color: #d9534f;
+    color: #8a2c2c;
+  }
+  .letra {
+    position: absolute;
+    left: 8px;
+    font-weight: bold;
+    color: #8a6d3b;
+  }
+  .correcta .letra {
+    color: #2e5b2e;
+  }
+  .incorrecta .letra {
+    color: #8a2c2c;
+  }
+  .etiqueta {
+    display: inline-block;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: #e8dfc7;
+    color: #5c4a2a;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+  .ejemplo-advertencia {
+    background-color: #f9dede;
+    border-left: 4px solid #d9534f;
+    color: #8a2c2c;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.85em;
+    margin-top: 14px;
+    margin-bottom: 4px;
+    font-weight: bold;
+  }
+  .linea-escritura {
+    position: relative;
+  }
+  .texto-manuscrito {
+    font-family: 'Caveat', 'Comic Sans MS', cursive;
+    font-size: 1.55em;
+    color: #2f5fa8;
+    position: absolute;
+    bottom: 2px;
+    left: 4px;
+    white-space: nowrap;
+  }
+  .explicacion {
+    margin-top: 12px;
+    font-size: 0.9em;
+    background-color: #f0e9db;
+    padding: 10px 15px;
+    border-radius: 6px;
+    display: none;
+  }
+  .explicacion.mostrar {
+    display: block;
+  }
+  footer {
+    text-align: center;
+    font-size: 0.85em;
+    color: #999;
+    margin-top: 40px;
+    border-top: 1px solid #ddd0b8;
+    padding-top: 15px;
+  }
+  .paginas-lectura {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  .pagina-box {
+    background-color: #ffffff;
+    border: 2px dashed #c9b98f;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    width: 280px;
+  }
+  .pagina-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto 8px auto;
+  }
+  .pagina-box .placeholder-text {
+    color: #b0a380;
+    font-size: 0.85em;
+    font-style: italic;
+    padding: 40px 10px;
+  }
+  .pagina-label {
+    font-size: 0.85em;
+    color: #7a6a4a;
+    margin-top: 6px;
+  }
+  .reflexion-pregunta {
+    background-color: #ffffff;
+    border: 1px solid #ddd0b8;
+    border-radius: 8px;
+    padding: 22px 28px;
+    margin-bottom: 28px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+  }
+  .linea-escritura {
+    border-bottom: 1px solid #b0a380;
+    height: 32px;
+    margin-top: 4px;
+  }
+  .campo-datos {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 20px;
+    font-size: 0.95em;
+  }
+  .campo-datos span {
+    border-bottom: 1px solid #999;
+    flex: 1;
+    padding-bottom: 3px;
+  }
+  .boton-imprimir {
+    display: block;
+    margin: 0 auto 25px auto;
+    background-color: #5c4a2a;
+    color: #faf7f2;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-family: 'Georgia', serif;
+    font-size: 0.95em;
+    cursor: pointer;
+  }
+  .boton-imprimir:hover {
+    background-color: #7a6a4a;
+  }
+  @media print {
+    .boton-imprimir,
+    .instrucciones,
+    .paginas-lectura,
+    .no-imprimir,
+    header .subtitulo {
+      display: none !important;
+    }
+    .seccion {
+      page-break-inside: avoid;
+    }
+    @page {
+      margin: 0.8cm 1.5cm;
+    }
+    body {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    header {
+      margin-bottom: 10px !important;
+      padding-bottom: 8px !important;
+      border-bottom-width: 2px !important;
+    }
+    h1 {
+      font-size: 1.3em !important;
+      margin-bottom: 2px !important;
+    }
+    .seccion-titulo {
+      padding: 4px 12px !important;
+      margin-bottom: 10px !important;
+      font-size: 1em !important;
+    }
+    .reflexion-pregunta {
+      padding: 12px 16px !important;
+      margin-bottom: 12px !important;
+    }
+    .pregunta-texto {
+      font-size: 0.92em !important;
+      margin: 4px 0 8px 0 !important;
+      line-height: 1.35 !important;
+    }
+    .campo-datos {
+      margin-bottom: 10px !important;
+      font-size: 0.85em !important;
+    }
+    .linea-escritura {
+      height: 22px !important;
+    }
+    .pregunta-numero {
+      font-size: 0.95em !important;
+    }
+    .etiqueta {
+      padding: 1px 8px !important;
+      margin-bottom: 4px !important;
+      font-size: 0.7em !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="boton-volver no-imprimir" href="../index.html"><span class="flecha">←</span> Volver al índice principal</a>
+  <h1>Guía de Comprensión Lectora</h1>
+  <div class="subtitulo">"¡Raptada!" — Capítulo 3 (Sofía es raptada por el gigante)</div>
+</header>
+
+<div class="instrucciones">
+  📖 <strong>Instrucciones:</strong> Lee con atención el fragmento antes de responder. Haz clic en la alternativa que consideres correcta: se marcará en <strong style="color:#2e5b2e;">verde</strong> si acertaste o en <strong style="color:#8a2c2c;">rojo</strong> si fallaste (y se mostrará cuál era la correcta).
+</div>
+
+<div class="seccion no-imprimir">
+  <div class="seccion-titulo">📄 Páginas del texto</div>
+  <div class="paginas-lectura">
+    <div class="pagina-box">
+      <img src="pagina18.png" alt="Página 18" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <div class="placeholder-text" style="display:none;">📷 Aquí va la imagen de la página 18<br>(reemplaza "pagina1.png" por tu archivo)</div>
+      <div class="pagina-label">Página 18</div>
+    </div>
+    <div class="pagina-box">
+      <img src="pagina19.png" alt="Página 19" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <div class="placeholder-text" style="display:none;">📷 Aquí va la imagen de la página 19<br>(reemplaza "pagina2.png" por tu archivo)</div>
+      <div class="pagina-label">Página 19</div>
+    </div>
+</div>
+
+<div class="seccion no-imprimir">
+  <div class="seccion-titulo">🔍 Comprensión y Análisis</div>
+
+  
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 11</span>
+    <span class="etiqueta">Comprensión literal</span>
+    <p class="pregunta-texto">Cuando Sofía alza una punta de la manta y atisba, ¿qué es lo que ve en la ventana?</p>
+    <ul class="alternativas" data-correcta="C">
+      <li data-letra="A"><span class="letra">A)</span> La luna llena brillando entre las cortinas.</li>
+      <li data-letra="B"><span class="letra">B)</span> A las demás niñas del internado espiándola.</li>
+      <li data-letra="C"><span class="letra">C)</span> La horrible y arrugada cara larga del gigante, con sus ojos negros clavados en su cama.</li>
+      <li data-letra="D"><span class="letra">D)</span> Una sombra que resultó ser solo el árbol del jardín.</li>
+    </ul>
+    <div class="explicacion">Alternativa C. Al asomarse, Sofía ve en la ventana, con las cortinas corridas hacia un lado, la cara larga y arrugada del gigante, cuyos centelleantes ojos negros estaban fijos en su cama.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 12</span>
+    <span class="etiqueta">Comprensión literal</span>
+    <p class="pregunta-texto">La niña sí llegó a chillar, pero solo durante un segundo. ¿Por qué su grito quedó ahogado?</p>
+    <ul class="alternativas" data-correcta="A">
+      <li data-letra="A"><span class="letra">A)</span> Porque la manaza del gigante se cerró rápidamente sobre la manta y la ropa ahogó el grito.</li>
+      <li data-letra="B"><span class="letra">B)</span> Porque se quedó sin voz a causa del miedo.</li>
+      <li data-letra="C"><span class="letra">C)</span> Porque una de sus compañeras le tapó la boca.</li>
+      <li data-letra="D"><span class="letra">D)</span> Porque decidió callarse para no ser descubierta.</li>
+    </ul>
+    <div class="explicacion">Alternativa A. En cuanto Sofía chilló, la enorme mano del gigante se cerró de golpe sobre la manta, y el grito quedó ahogado por la ropa que la cubría.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 13</span>
+    <span class="etiqueta">Comprensión literal</span>
+    <p class="pregunta-texto">Una vez que sacó a la niña de la casa, ¿cómo se las arregló el gigante para llevarse a Sofía y sus cosas a la vez?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> Metió a Sofía dentro de la maleta y cargó la trompeta al hombro.</li>
+      <li data-letra="B"><span class="letra">B)</span> Agarró con una mano los cuatro extremos de la manta con Sofía dentro, y con la otra cogió la maleta y la trompeta.</li>
+      <li data-letra="C"><span class="letra">C)</span> Dejó la maleta abandonada en la calle para poder correr más rápido.</li>
+      <li data-letra="D"><span class="letra">D)</span> Llamó a otro gigante para que lo ayudara a cargarlo todo.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. El gigante arregló la manta para sujetar sus cuatro extremos con una sola mano, con Sofía dentro, y con la otra mano tomó la maleta y la larguísima trompeta antes de echar a correr.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 14</span>
+    <span class="etiqueta">Análisis narrativo</span>
+    <p class="pregunta-texto">El texto describe la velocidad del gigante diciendo que "cada uno de sus pasos era tan largo como un campo de tenis" y que salvó un ancho río "de una zancada". ¿Qué busca lograr el autor con estas comparaciones?</p>
+    <ul class="alternativas" data-correcta="C">
+      <li data-letra="A"><span class="letra">A)</span> Demostrar que el gigante estaba cansado y avanzaba con dificultad.</li>
+      <li data-letra="B"><span class="letra">B)</span> Confundir al lector sobre el lugar donde ocurre la historia.</li>
+      <li data-letra="C"><span class="letra">C)</span> Exagerar el tamaño y la rapidez del gigante para que el lector imagine lo enorme y veloz que era.</li>
+      <li data-letra="D"><span class="letra">D)</span> Indicar que el gigante en realidad se movía muy lentamente.</li>
+    </ul>
+    <div class="explicacion">Alternativa C. Al comparar los pasos con un campo de tenis y describir cómo cruza un río de una sola zancada, el autor usa la exageración para que el lector perciba el tamaño descomunal y la enorme velocidad del gigante.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 15</span>
+    <span class="etiqueta">Inferencia</span>
+    <p class="pregunta-texto">Al final del fragmento, Sofía piensa: «Este gigante va tan deprisa porque tiene hambre, y quiere llegar a su casa cuanto antes para comerme en el desayuno...». ¿Qué se puede inferir sobre el estado de ánimo de Sofía en ese momento?</p>
+    <ul class="alternativas" data-correcta="A">
+      <li data-letra="A"><span class="letra">A)</span> Está aterrorizada y teme que el gigante quiera devorarla.</li>
+      <li data-letra="B"><span class="letra">B)</span> Se siente tranquila y confía en que el gigante la cuidará.</li>
+      <li data-letra="C"><span class="letra">C)</span> Está emocionada por la aventura de viajar tan rápido.</li>
+      <li data-letra="D"><span class="letra">D)</span> Se encuentra aburrida dentro de la manta.</li>
+    </ul>
+    <div class="explicacion">Alternativa A. El "terrible pensamiento" de Sofía revela su pánico: cree que la prisa del gigante se debe al hambre y que planea comérsela, lo que muestra lo asustada e indefensa que se siente.</div>
+  </div>
+</div>
+
+<div class="seccion no-imprimir">
+  <div class="seccion-titulo">📚 Vocabulario en contexto</div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Vocabulario 1</span>
+    <p class="pregunta-texto">El texto dice que Sofía alzó una punta de la manta y "<strong>atisbó</strong>". ¿Qué significa este verbo?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> Gritar con todas sus fuerzas.</li>
+      <li data-letra="B"><span class="letra">B)</span> Mirar con cuidado y disimulo, tratando de ver algo.</li>
+      <li data-letra="C"><span class="letra">C)</span> Quedarse profundamente dormida.</li>
+      <li data-letra="D"><span class="letra">D)</span> Esconderse debajo de las sábanas.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. "Atisbar" significa mirar con atención y de forma disimulada, tratando de observar algo sin ser descubierto, tal como hace Sofía al asomarse por debajo de la manta.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Vocabulario 2</span>
+    <p class="pregunta-texto">El relato dice que la mano del gigante era una "<strong>manaza</strong>" que se cerró sobre la manta. ¿Qué expresa esa palabra?</p>
+    <ul class="alternativas" data-correcta="C">
+      <li data-letra="A"><span class="letra">A)</span> Una mano muy pequeña y delicada.</li>
+      <li data-letra="B"><span class="letra">B)</span> Una mano herida o lastimada.</li>
+      <li data-letra="C"><span class="letra">C)</span> Una mano muy grande; la terminación "-aza" aumenta el tamaño de la palabra.</li>
+      <li data-letra="D"><span class="letra">D)</span> Una mano sucia y llena de barro.</li>
+    </ul>
+    <div class="explicacion">Alternativa C. "Manaza" es un aumentativo de "mano": la terminación "-aza" indica que es una mano enorme, lo que refuerza el tamaño descomunal del gigante.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Vocabulario 3</span>
+    <p class="pregunta-texto">El texto dice que Sofía estaba "hecha un <strong>ovillo</strong>" debajo de la manta. ¿Qué quiere decir esa expresión?</p>
+    <ul class="alternativas" data-correcta="A">
+      <li data-letra="A"><span class="letra">A)</span> Encogida sobre sí misma, apretada como una bola.</li>
+      <li data-letra="B"><span class="letra">B)</span> Estirada y completamente relajada.</li>
+      <li data-letra="C"><span class="letra">C)</span> Saltando de un lado a otro.</li>
+      <li data-letra="D"><span class="letra">D)</span> De pie junto a la ventana.</li>
+    </ul>
+    <div class="explicacion">Alternativa A. Un "ovillo" es una bola de hilo enrollado; "hecha un ovillo" significa que Sofía estaba encogida y apretada sobre sí misma, acurrucada por el miedo.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Vocabulario 4</span>
+    <p class="pregunta-texto">El gigante cruzó un ancho río "de una <strong>zancada</strong>". ¿Qué es una "zancada"?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> Un salto hacia arriba con los dos pies juntos.</li>
+      <li data-letra="B"><span class="letra">B)</span> Un paso muy largo, dado al andar o correr.</li>
+      <li data-letra="C"><span class="letra">C)</span> Una caída al suelo.</li>
+      <li data-letra="D"><span class="letra">D)</span> Un descanso breve antes de seguir corriendo.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. Una "zancada" es un paso muy largo; que el gigante cruzara un ancho río de una sola zancada muestra la enorme longitud de sus piernas.</div>
+  </div>
+</div>
+
+<div class="seccion">
+  <div class="seccion-titulo">✍️ Preguntas de Interpretación y Reflexión</div>
+  <p class="no-imprimir" style="font-size:0.85em; color:#7a6a4a; margin-top:-10px; margin-bottom:15px;">
+    Al imprimir o exportar a PDF, solo se incluirá esta sección y las líneas quedarán en blanco.
+  </p>
+
+  <button class="boton-imprimir no-imprimir" onclick="window.print()">🖨️ Imprimir / Guardar como PDF</button>
+
+ 
+
+  <div class="reflexion-pregunta">
+    <div class="campo-datos">
+      <div>Nombre: <span>&nbsp;</span></div>
+      <div>Fecha: <span>&nbsp;</span></div>
+    </div>
+
+    <span class="pregunta-numero">Pregunta 5</span>
+    <span class="etiqueta">Interpretación y pensamiento crítico</span>
+    <p class="pregunta-texto">
+      El texto dice que "lo peor de todo era que Sofía sabía exactamente lo que le pasaba, pese a que no podía
+      verlo". Aunque estaba atrapada dentro de la manta, era consciente de que un monstruo o gigante la había
+      arrancado de su cama. ¿Por qué crees que para Sofía era aún más angustiante saber lo que ocurría sin
+      poder verlo? Explica tu respuesta apoyándote en algún detalle del texto.
+    </p>
+
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">Creo que era más angustiante porque su imaginación</span></div>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">llenaba de miedo lo que no veía, y encerrada en la</span></div>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">manta se sentía indefensa y sin poder escapar.</span></div>
+
+    <div class="ejemplo-advertencia no-imprimir">
+      ⚠️ El texto azul de arriba es solo un ejemplo de cómo se ve una respuesta completa. Tu respuesta
+      NO puede ser igual ni copiar esas frases: debes escribirla con tus propias palabras.
+    </div>
+  </div>
+
+  <div class="reflexion-pregunta">
+    <span class="pregunta-numero">Pregunta 6</span>
+    <span class="etiqueta">Interpretación y pensamiento crítico</span>
+    <p class="pregunta-texto">
+      Sofía se retorció dentro de la manta hasta lograr asomar la nariz por una pequeña abertura y mirar a su
+      alrededor, aun a costa de ver cosas que la asustaban. Si tú hubieras estado en su lugar, envuelto en la
+      manta mientras el gigante corría a toda velocidad, ¿habrías intentado asomarte a mirar como ella o
+      habrías preferido quedarte escondido? Fundamenta tu respuesta usando algún detalle de la escena.
+    </p>
+
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">Yo también habría intentado asomarme, porque saber</span></div>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">hacia dónde me llevaban me daría más pistas para</span></div>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">reaccionar, aunque lo que viera me diera mucho miedo.</span></div>
+
+    <div class="ejemplo-advertencia no-imprimir">
+      ⚠️ El texto azul de arriba es solo un ejemplo de cómo se ve una respuesta completa. Tu respuesta
+      NO puede ser igual ni copiar esas frases: debes escribirla con tus propias palabras.
+    </div>
+  </div>
+</div>
+
+<footer>
+  Guía generada como material de apoyo a la lectura. Las respuestas son sugerencias pedagógicas para autoevaluación.
+</footer>
+
+<script>
+  document.querySelectorAll('.alternativas').forEach(function(ul) {
+    ul.addEventListener('click', function(e) {
+      var li = e.target.closest('li');
+      if (!li || ul.classList.contains('respondida')) return;
+
+      var correcta = ul.getAttribute('data-correcta');
+      ul.classList.add('respondida');
+
+      ul.querySelectorAll('li').forEach(function(item) {
+        if (item.getAttribute('data-letra') === correcta) {
+          item.classList.add('correcta');
+        } else if (item === li) {
+          item.classList.add('incorrecta');
+        }
+      });
+
+      var explicacion = ul.parentElement.querySelector('.explicacion');
+      if (explicacion) {
+        explicacion.classList.add('mostrar');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
