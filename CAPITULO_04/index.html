@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Comprensión Lectora - La cueva</title>
+<style>
+  :root{
+    --tinta:#1f2440;
+    --tinta-suave:#454b73;
+    --papel:#fbf9f4;
+    --papel-borde:#e7e2d6;
+    --acento:#c9962b;          /* oro pálido del amanecer */
+    --acento-oscuro:#8a6410;
+    --noche:#232a4d;           /* azul cueva */
+    --correcta:#1f7a4d;
+    --correcta-bg:#e6f4ec;
+    --incorrecta:#b23a3a;
+    --incorrecta-bg:#f8e7e7;
+    --manuscrito:#2a56c4;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--papel);
+    color:var(--tinta);
+    font-family:"Georgia","Times New Roman",serif;
+    line-height:1.6;
+  }
+  .hoja{
+    max-width:820px;
+    margin:0 auto;
+    padding:32px 34px 60px;
+  }
+  header{
+    text-align:center;
+    border-bottom:3px solid var(--noche);
+    padding-bottom:18px;
+    margin-bottom:26px;
+  }
+  header h1{
+    font-size:1.9rem;
+    margin:0 0 6px;
+    letter-spacing:.5px;
+    color:var(--noche);
+  }
+  .subtitulo{
+    font-size:1.05rem;
+    font-style:italic;
+    color:var(--tinta-suave);
+  }
+  .datos-alumno{
+    display:flex;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-top:16px;
+    font-size:.9rem;
+    color:var(--tinta-suave);
+  }
+  .datos-alumno span{flex:1 1 200px;border-bottom:1px solid var(--papel-borde);padding-bottom:2px;}
+
+  .seccion-titulo{
+    font-size:1.25rem;
+    color:var(--noche);
+    margin:34px 0 4px;
+    padding-bottom:6px;
+    border-bottom:2px solid var(--acento);
+  }
+  .seccion-intro{
+    font-size:.95rem;
+    color:var(--tinta-suave);
+    margin:0 0 14px;
+  }
+
+  /* Páginas del libro */
+  .paginas{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin:10px 0 8px;
+  }
+  .pagina{
+    flex:1 1 220px;
+    max-width:250px;
+    text-align:center;
+  }
+  .pagina img{
+    width:100%;
+    border:1px solid var(--papel-borde);
+    border-radius:4px;
+    box-shadow:0 2px 6px rgba(31,36,64,.12);
+    background:#fff;
+  }
+  .pagina figcaption{
+    font-size:.82rem;
+    color:var(--tinta-suave);
+    margin-top:4px;
+  }
+
+  /* Preguntas */
+  .pregunta{
+    background:#fff;
+    border:1px solid var(--papel-borde);
+    border-left:5px solid var(--acento);
+    border-radius:6px;
+    padding:16px 18px;
+    margin:16px 0;
+  }
+  .pregunta-numero{
+    display:inline-block;
+    font-weight:bold;
+    color:var(--noche);
+    margin-right:10px;
+  }
+  .etiqueta{
+    display:inline-block;
+    font-size:.72rem;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+    background:var(--noche);
+    color:#fff;
+    padding:2px 9px;
+    border-radius:20px;
+    vertical-align:middle;
+  }
+  .pregunta-texto{
+    margin:10px 0 12px;
+  }
+  .alternativas{
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .alternativas li{
+    padding:9px 12px;
+    margin:6px 0;
+    border:1px solid var(--papel-borde);
+    border-radius:5px;
+    cursor:pointer;
+    transition:background .15s,border-color .15s;
+  }
+  .alternativas li:hover{background:#f4f1e8;}
+  .alternativas li .letra{font-weight:bold;color:var(--acento-oscuro);margin-right:6px;}
+  .alternativas li.correcta{
+    background:var(--correcta-bg);
+    border-color:var(--correcta);
+    color:var(--correcta);
+    font-weight:bold;
+  }
+  .alternativas li.incorrecta{
+    background:var(--incorrecta-bg);
+    border-color:var(--incorrecta);
+    color:var(--incorrecta);
+    text-decoration:line-through;
+  }
+  .explicacion{
+    display:none;
+    margin-top:12px;
+    padding:11px 14px;
+    background:#f4f1e8;
+    border-left:4px solid var(--correcta);
+    border-radius:4px;
+    font-size:.92rem;
+    color:var(--tinta);
+  }
+  .explicacion.mostrar{display:block;}
+
+  /* Respuesta abierta */
+  .linea-escritura{
+    border-bottom:1.5px solid var(--papel-borde);
+    height:30px;
+    margin:14px 0;
+    position:relative;
+  }
+  .texto-manuscrito{
+    font-family:"Comic Sans MS","Segoe Print",cursive;
+    color:var(--manuscrito);
+    font-size:1.02rem;
+    position:absolute;
+    bottom:2px;
+    left:2px;
+  }
+
+  .pie{
+    margin-top:40px;
+    padding-top:14px;
+    border-top:1px solid var(--papel-borde);
+    text-align:center;
+    font-size:.82rem;
+    color:var(--tinta-suave);
+  }
+
+  .barra-imprimir{text-align:center;margin:22px 0 4px;}
+  .btn-imprimir{
+    background:var(--noche);
+    color:#fff;
+    border:none;
+    padding:10px 22px;
+    border-radius:30px;
+    font-family:inherit;
+    font-size:.95rem;
+    cursor:pointer;
+  }
+  .btn-imprimir:hover{background:#161c38;}
+
+  @media print{
+    body{background:#fff;}
+    .hoja{max-width:100%;padding:0;}
+    .no-imprimir{display:none !important;}
+    .pregunta{break-inside:avoid;border-left-color:#333;}
+    .barra-imprimir{display:none;}
+    .alternativas li{cursor:default;}
+  }
+</style>
+</head>
+<body>
+<div class="hoja">
+
+  <header>
+    <h1>Guía de Comprensión Lectora</h1>
+    <div class="subtitulo">"La cueva" — Capítulo 4 (Sofía llega a la cueva del gigante)</div>
+    <div class="datos-alumno">
+      <span>Nombre:</span>
+      <span>Curso:</span>
+      <span>Fecha:</span>
+    </div>
+  </header>
+
+  <!-- ===================== LECTURA ===================== -->
+  <h2 class="seccion-titulo">Lectura del capítulo</h2>
+  <p class="seccion-intro">Lee con atención las páginas 20, 21 y 22 antes de responder.</p>
+  <div class="paginas">
+    <figure class="pagina">
+      <img src="pagina20.png" alt="Página 20 del libro">
+      <figcaption>Página 20</figcaption>
+    </figure>
+    <figure class="pagina">
+      <img src="pagina21.png" alt="Página 21 del libro">
+      <figcaption>Página 21</figcaption>
+    </figure>
+    <figure class="pagina">
+      <img src="pagina22.png" alt="Página 22 del libro">
+      <figcaption>Página 22</figcaption>
+    </figure>
+  </div>
+
+  <!-- ===================== ALTERNATIVAS 16-20 ===================== -->
+  <h2 class="seccion-titulo">I. Comprensión lectora (alternativas)</h2>
+  <p class="seccion-intro">Marca la alternativa correcta. Al hacer clic verás si acertaste y una breve explicación.</p>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 16</span>
+    <span class="etiqueta">Comprensión literal</span>
+    <p class="pregunta-texto">Mientras el gigante corría a toda velocidad, ¿qué extraña sensación experimentaba Sofía?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> La sensación de estar cayendo a un pozo profundo.</li>
+      <li data-letra="B"><span class="letra">B)</span> La sensación de volar, pues no notaba que los pies del gigante tocaran el suelo.</li>
+      <li data-letra="C"><span class="letra">C)</span> La sensación de tener mucho sueño y ganas de dormir.</li>
+      <li data-letra="D"><span class="letra">D)</span> La sensación de estar dando vueltas sin avanzar.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. El viento la envolvía y Sofía tenía la extraña sensación de volar, porque no notaba que los pies del gigante tocaran el suelo; incluso era imposible saber si pasaban por encima de tierra o de agua.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 17</span>
+    <span class="etiqueta">Comprensión literal</span>
+    <p class="pregunta-texto">¿Cómo logró el gigante abrir la entrada de su cueva?</p>
+    <ul class="alternativas" data-correcta="C">
+      <li data-letra="A"><span class="letra">A)</span> Cavó un túnel en la tierra con sus enormes manos.</li>
+      <li data-letra="B"><span class="letra">B)</span> Empujó una gran puerta de madera escondida entre los árboles.</li>
+      <li data-letra="C"><span class="letra">C)</span> Apartó con la pierna una peña enorme, tan grande como una casa, con la facilidad de una pelota de fútbol.</li>
+      <li data-letra="D"><span class="letra">D)</span> Pronunció unas palabras mágicas para que la roca desapareciera.</li>
+    </ul>
+    <div class="explicacion">Alternativa C. Frente a la ladera había una peña redonda y maciza, grande como una casa. El gigante alargó una pierna y la apartó con tanta facilidad como si fuera una pelota de fútbol, dejando al descubierto un enorme agujero negro.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 18</span>
+    <span class="etiqueta">Análisis narrativo</span>
+    <p class="pregunta-texto">El texto dice que la peña era "tan grande como una casa" y que el gigante la movió "como si fuera una pelota de fútbol". ¿Qué logra el autor con estas comparaciones?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> Mostrar que la roca en realidad era muy liviana y hueca.</li>
+      <li data-letra="B"><span class="letra">B)</span> Resaltar la descomunal fuerza del gigante, capaz de mover algo enorme con total facilidad.</li>
+      <li data-letra="C"><span class="letra">C)</span> Explicar que al gigante le gustaba mucho jugar al fútbol.</li>
+      <li data-letra="D"><span class="letra">D)</span> Indicar que la cueva era en verdad muy pequeña.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. Al contrastar el tamaño de la peña (una casa) con la facilidad del gesto (una pelota de fútbol), el autor exagera para que el lector perciba la fuerza descomunal del gigante.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 19</span>
+    <span class="etiqueta">Inferencia</span>
+    <p class="pregunta-texto">Al quedar todo a oscuras, Sofía imagina que el gigante la devorará cruda, o que la cocerá o la freirá en una sartén. ¿Qué revela ese pensamiento sobre ella?</p>
+    <ul class="alternativas" data-correcta="C">
+      <li data-letra="A"><span class="letra">A)</span> Que Sofía tenía mucha hambre en ese momento.</li>
+      <li data-letra="B"><span class="letra">B)</span> Que Sofía confiaba plenamente en las buenas intenciones del gigante.</li>
+      <li data-letra="C"><span class="letra">C)</span> Que Sofía estaba aterrorizada y temía que el gigante quisiera comérsela.</li>
+      <li data-letra="D"><span class="letra">D)</span> Que a Sofía le encantaba cocinar y pensaba en recetas.</li>
+    </ul>
+    <div class="explicacion">Alternativa C. En plena oscuridad, la imaginación de Sofía se llena de imágenes de ser devorada; esos pensamientos muestran el pánico y la indefensión que siente al estar atrapada.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 20</span>
+    <span class="etiqueta">Comprensión literal</span>
+    <p class="pregunta-texto">Cuando una luz brillante iluminó la cueva, ¿qué vio Sofía cubriendo las paredes?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> Armas y espadas colgadas de ganchos.</li>
+      <li data-letra="B"><span class="letra">B)</span> Estantes repletos de hileras de botes de vidrio, por todas partes.</li>
+      <li data-letra="C"><span class="letra">C)</span> Retratos y pinturas de otros gigantes.</li>
+      <li data-letra="D"><span class="letra">D)</span> Grandes montañas de huesos amontonados.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. Las paredes estaban cubiertas de estantes con hileras de botes de vidrio; los había por todas partes, formando pilas en los rincones e incluso metidos en las grietas de la piedra.</div>
+  </div>
+
+  <!-- ===================== VOCABULARIO 1-4 ===================== -->
+  <h2 class="seccion-titulo">II. Vocabulario en contexto</h2>
+  <p class="seccion-intro">Elige el significado que tienen estas palabras según cómo aparecen en el capítulo.</p>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Vocabulario 1</span>
+    <p class="pregunta-texto">Al asomar la cabeza, Sofía se vio en un país de espesos bosques y ríos "<strong>impetuosos</strong>". ¿Qué significa esa palabra?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> Tranquilos y de aguas quietas.</li>
+      <li data-letra="B"><span class="letra">B)</span> Que se mueven con mucha fuerza y violencia.</li>
+      <li data-letra="C"><span class="letra">C)</span> Muy pequeños y casi secos.</li>
+      <li data-letra="D"><span class="letra">D)</span> De aguas heladas y cristalinas.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. "Impetuoso" describe algo que se mueve con gran fuerza y rapidez; un río impetuoso arrastra sus aguas con violencia.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Vocabulario 2</span>
+    <p class="pregunta-texto">La montaña que ve Sofía se describe como enorme y "<strong>escarpada</strong>". ¿Qué quiere decir "escarpada"?</p>
+    <ul class="alternativas" data-correcta="A">
+      <li data-letra="A"><span class="letra">A)</span> De laderas muy empinadas y difíciles de subir.</li>
+      <li data-letra="B"><span class="letra">B)</span> Cubierta de nieve por todos lados.</li>
+      <li data-letra="C"><span class="letra">C)</span> Redonda, baja y de pendientes suaves.</li>
+      <li data-letra="D"><span class="letra">D)</span> Llena de árboles y vegetación.</li>
+    </ul>
+    <div class="explicacion">Alternativa A. Una montaña "escarpada" tiene pendientes muy pronunciadas y abruptas, difíciles de escalar.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Vocabulario 3</span>
+    <p class="pregunta-texto">Al detenerse al pie de la montaña, el gigante "<strong>resoplaba</strong>" con fuerza. ¿Qué significa "resoplar"?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> Cantar en voz muy baja.</li>
+      <li data-letra="B"><span class="letra">B)</span> Respirar de forma ruidosa y agitada, por el cansancio.</li>
+      <li data-letra="C"><span class="letra">C)</span> Quedarse dormido de pie.</li>
+      <li data-letra="D"><span class="letra">D)</span> Reír a carcajadas.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. "Resoplar" es echar el aire con fuerza y ruido, como cuando alguien está muy cansado y necesita recuperar el aliento; por eso su pecho subía y bajaba.</div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Vocabulario 4</span>
+    <p class="pregunta-texto">Cuando el gigante grita, el texto dice que su "<strong>vozarrón</strong>" resonó como un trueno. ¿Qué es un "vozarrón"?</p>
+    <ul class="alternativas" data-correcta="B">
+      <li data-letra="A"><span class="letra">A)</span> Una voz muy suave y dulce.</li>
+      <li data-letra="B"><span class="letra">B)</span> Una voz muy fuerte y potente; la terminación "-arrón" aumenta la palabra.</li>
+      <li data-letra="C"><span class="letra">C)</span> Un susurro apenas audible.</li>
+      <li data-letra="D"><span class="letra">D)</span> Una voz temblorosa por el miedo.</li>
+    </ul>
+    <div class="explicacion">Alternativa B. "Vozarrón" es un aumentativo de "voz": la terminación "-arrón" indica una voz enorme y retumbante, que resuena como un trueno.</div>
+  </div>
+
+  <!-- ===================== RESPUESTA ABIERTA 7-8 ===================== -->
+  <h2 class="seccion-titulo">III. Respuesta abierta</h2>
+  <p class="seccion-intro">Escribe con tus palabras. Usa detalles del texto para fundamentar tu respuesta.</p>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 7</span>
+    <span class="etiqueta">Interpretación y pensamiento crítico</span>
+    <p class="pregunta-texto">
+      Durante el viaje, Sofía tuvo "la extraña sensación de volar" y no podía saber si pasaban por encima de
+      tierra o de agua; luego el gigante la encerró en una cueva oscura sin decirle nada. ¿Cómo crees que se
+      sentía Sofía al no saber a dónde la llevaban ni qué le iba a pasar? Explica tu respuesta apoyándote en
+      algún detalle del texto.
+    </p>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">Creo que se sentía muy asustada e indefensa, porque no</span></div>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">controlaba nada de lo que ocurría y su imaginación</span></div>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">llenaba de miedo lo desconocido, como al pensar que la comerían.</span></div>
+  </div>
+
+  <div class="pregunta">
+    <span class="pregunta-numero">Pregunta 8</span>
+    <span class="etiqueta">Interpretación y pensamiento crítico</span>
+    <p class="pregunta-texto">
+      Al final del fragmento, el gigante grita "¡Caramba! ¿Qué nos hemos traído?" con una voz como un trueno,
+      y Sofía tiembla como una hoja, sintiendo un dedo de hielo recorrerle la espalda. Si tú hubieras estado
+      en el lugar de Sofía al escuchar esa voz, ¿qué habrías hecho o pensado? Fundamenta tu respuesta usando
+      algún detalle de la escena.
+    </p>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">Yo también habría temblado de miedo, pero intentaría</span></div>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">quedarme muy quieta y observar al gigante para descubrir</span></div>
+    <div class="linea-escritura"><span class="texto-manuscrito no-imprimir">si era peligroso antes de decidir qué hacer o decir.</span></div>
+  </div>
+
+  <div class="barra-imprimir no-imprimir">
+    <button class="btn-imprimir" onclick="window.print()">Imprimir / Guardar como PDF</button>
+  </div>
+
+  <div class="pie">
+    El Gran Gigante Bonachón — Roald Dahl · Capítulo 4: "La cueva" · Guía de Comprensión Lectora
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.alternativas').forEach(function(ul){
+    var correcta = ul.getAttribute('data-correcta');
+    ul.querySelectorAll('li').forEach(function(li){
+      li.addEventListener('click', function(){
+        if (ul.dataset.respondida === 'si') return;
+        ul.dataset.respondida = 'si';
+        var letra = li.getAttribute('data-letra');
+        if (letra === correcta){
+          li.classList.add('correcta');
+        } else {
+          li.classList.add('incorrecta');
+          var buena = ul.querySelector('li[data-letra="'+correcta+'"]');
+          if (buena) buena.classList.add('correcta');
+        }
+        var exp = ul.parentElement.querySelector('.explicacion');
+        if (exp) exp.classList.add('mostrar');
+      });
+    });
+  });
+</script>
+</body>
+</html>
